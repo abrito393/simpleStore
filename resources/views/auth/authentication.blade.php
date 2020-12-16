@@ -24,7 +24,7 @@
                     <span style='color:red' id="errorPsw" class="spanError"><b>*Este Campo es requerido*</b></span>
                 </div>
                 <a href="#" id="btnLogin" class="btn btn-primary">Login</a>
-                <a href="{{route('form.register')}}" class="btn btn-dark d-none">Registrarme</a>
+                <a href="{{route('form.register')}}" class="btn btn-dark ">Registrarme</a>
             </div>
         </div>
     </div>

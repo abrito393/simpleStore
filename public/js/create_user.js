@@ -10,7 +10,7 @@ if(sessionStorage.getItem("access_token") != null){
     $( ".btnUser" ).text(sessionStorage.getItem("user"));
 }
 
-$( "#btnLogin" ).click(function() {
+$( "#btnCreateUser" ).click(function() {
     $( ".spanError" ).hide();
     if(!$("#email").val()){
         $("#errorEmail").show();return 1;
@@ -18,6 +18,11 @@ $( "#btnLogin" ).click(function() {
     if(!$("#password").val()){
         $("#errorPsw").show();return 1;
     }
+
+    if(!$("#name").val()){
+        $("#errorName").show();return 1;
+    }
+    
     sessionStorage.clear();
     $.ajax({
         url: urlx,
@@ -25,6 +30,7 @@ $( "#btnLogin" ).click(function() {
         headers: {'X-CSRF-TOKEN': tokenCsrf},
         datatype: 'json',
         data:{
+            name : $("#name").val(),
             email : $("#email").val(),
             password : $("#password").val()
         },
@@ -40,19 +46,19 @@ $( "#btnLogin" ).click(function() {
             },
             400: function(response) {
                 $( ".errorText" ).empty();
-                $( ".errorText" ).append('<h5>Email o Contraseña incorrrecto!</h5>');
+                $( ".errorText" ).append('<h5>Email ya existe!</h5>');
                 $( ".errorText" ).show();
                 $( ".errorText" ).delay(3200).fadeOut(1000);
                 console.log('ajax.statusCode: 400');
             },
             404: function(response) {
                 $( ".errorText" ).empty();
-                $( ".errorText" ).append('<h5>Email o Contraseña incorrrecto!</h5>');
+                $( ".errorText" ).append('<h5>Email ya existe!</h5>');
                 console.log('ajax.statusCode: 404');
             },
             500: function(response) {
                 $( ".errorText" ).empty();
-                $( ".errorText" ).append('<h5>Email o Contraseña incorrrecto!</h5>');
+                $( ".errorText" ).append('<h5>Email ya existe!</h5>');
                 console.log('ajax.statusCode: 500');
             }
         }

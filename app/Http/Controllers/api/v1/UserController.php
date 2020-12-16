@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class UserController extends Controller
 
     public function viewRegister(Request $request)
     {
-        return view('auth.authentication');
+        return view('auth.register');
     }
 
     public function viewUserInfo(Request $request)
@@ -94,11 +95,11 @@ class UserController extends Controller
         $token->expires_at = Carbon::now()->addWeeks(2);
         $token->save();
 
-        $searchAmdinProfile = Profile::where('cod','cl')->first();
+        $searchClProfile = Profile::where('cod','cl')->first();
         $user->email = $request->email;
         $user->name = $request->name;
         $user->password = bcrypt($request->password);
-        $user->user_type_id = $searchAmdinProfile->id;
+        $user->user_type_id = $searchClProfile->id;
         $user->save();
 
         return response()->json([
